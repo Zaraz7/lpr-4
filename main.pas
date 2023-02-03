@@ -9,7 +9,7 @@ program TrapsArea;
 }
 
 uses
-  WinCrt, Crt, Graph, Math;
+  Crt, ptcGraph, ptcCrt;
 
 const
   menu: array[1..6] of string = (
@@ -165,15 +165,16 @@ var
     Driver, Mode: smallint;
     xReal, Si: currency;
     userValue, lblText: string;
-    //pFrame: Pointer;
-    size: word;
+    pFrame: Pointer;
+    size: integer;
   begin
     newPage(menu[selectedItem]);
 
     scaleX := 20;
     scaleY := 5;
 
-    detectGraph(Driver, Mode);
+    Driver:=10;
+    Mode:=260;
     initGraph(Driver, Mode, '');
 
     repeat
@@ -185,6 +186,10 @@ var
 
       line(20, y0, xn, y0);
       line(x0, 20, x0, yn);
+
+{       Size := ImageSize(20, 20, xn, yn);
+      GetMem(pFrame, Size);
+      GetImage(20, 20, xn, yn, pFrame^); }
 
       xReal := (xn - 20) / 10;
       for i := -5 to 4 do
@@ -280,7 +285,7 @@ var
         complite := True;
       end;
       //writeln;
-      userKey := wincrt.readkey;
+      userKey := ptccrt.readkey;
       case userKey of
         #80:
         begin
@@ -296,12 +301,14 @@ var
             scaleX := 1;
         end;
         #77: Inc(scaleX);
-        #13:
+        // #116: PutImage(100, 100, pFrame^, NormalPut);
+        #27:
         begin
           closeGraph;
           userKey := #1;
         end;
       end;
+      // freeMem(pFrame, size);
     until userKey = #1;
   end;
 
@@ -412,7 +419,7 @@ var
             end;
             userKey := #13;
           end;
-          #1: quit;
+          #1, #27: quit;
         end;
         gotoXY(1, 10);
         Write(ord(userKey));
