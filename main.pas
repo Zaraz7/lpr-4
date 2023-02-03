@@ -289,6 +289,13 @@ var
             scaleY := 1;
         end;
         #72: Inc(scaleY);
+        #75:
+        begin
+          Dec(scaleX);
+          if scaleX = 0 then
+            scaleX := 1;
+        end;
+        #77: Inc(scaleX);
         #13:
         begin
           closeGraph;
@@ -408,6 +415,7 @@ var
           #1: quit;
         end;
         gotoXY(1, 10);
+        Write(ord(userKey));
       until userKey = #13;
       clrScr;
     until False;
