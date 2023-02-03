@@ -6,6 +6,7 @@ Interface
     t = 0.001;
   var
     status, complite: boolean;
+    n: word;
     a, b, h: real;
     area: currency;
 
@@ -38,5 +39,6 @@ Implementation
 Begin
   area := 0;
   complite := False;
+  status := False;
 //инициализация
 End.
