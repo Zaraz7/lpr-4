@@ -9,7 +9,7 @@ program TrapsArea;
 }
 
 uses
-  Crt, ptcGraph, ptcCrt;
+  Crt, ptcGraph, ptcCrt, tsCalc;
 
 const
   menu: array[1..6] of string = (
@@ -19,16 +19,12 @@ const
     'Bias',
     'About',
     'Quit');
-  t = 0.001;
   xRoot = -3.35;
 var
   i: integer;
   selectedItem, scaleX, scaleY: byte;
   n: word;
-  a, b, h: real;
-  area: currency;
   userKey: char;
-  status, complite: boolean;
 
 
   { Это процедура для более красивого и страшного вывода ошибок}
@@ -151,7 +147,7 @@ var
       border := br;
   end;
 
-  procedure trapArea; forward;
+  //procedure trapArea; forward;
 
   //procedure graphX(scale);
 
@@ -328,23 +324,23 @@ var
     until False;
   end;
 
-  procedure trapArea;
-  { Непосредственно вычисление самого алгоитма и вывод}
-  var
-    x: real;
-  begin
-    newPage(menu[selectedItem]);
-    x := a + h;
-    area := (f(a) + f(b)) / 2;
-    while (b - x) > t do
-    begin
-      area := area + f(x);
-      x := x + h;
-    end;
-    area := area * h;
-    writeln('Area = ', area: 2: 2);
-    complite := True;
-  end;
+  // procedure trapArea;
+  // { Непосредственно вычисление самого алгоитма и вывод}
+  // var
+  //   x: real;
+  // begin
+  //   newPage(menu[selectedItem]);
+  //   x := a + h;
+  //   area := (f(a) + f(b)) / 2;
+  //   while (b - x) > t do
+  //   begin
+  //     area := area + f(x);
+  //     x := x + h;
+  //   end;
+  //   area := area * h;
+  //   writeln('Area = ', area: 2: 2);
+  //   complite := True;
+  // end;
 
   procedure errorCalculate;
   var
@@ -369,7 +365,7 @@ var
   begin
     newPage(menu[selectedItem]);
     writeln('TrapsArea is a programm for calculation of an area of figure limited by the Ox axis and curve');
-    writeln('y = 1*x^3 + 1*x^2 + (-4)*x + 13');
+    writeln(Description);
     writeln('using the Trapezoid method.');
     writeln('Made by Terlyck Maxim');
     readln;
@@ -414,6 +410,7 @@ var
               begin
                 if status then
                 begin
+                  newPage(menu[selectedItem]);
                   trapArea;
                   readln;
                 end

@@ -2,13 +2,15 @@ Unit tsCalc;
 Interface
 //интерфейсная часть>
   const
-   Description = 'y = 1*x^3 + 1*x^2 + (-4)*x + 13';
+    Description = 'y = 1*x^3 + 1*x^2 + (-4)*x + 13';
+    t = 0.001;
   var
-    complite: boolean;
+    status, complite: boolean;
+    a, b, h: real;
     area: currency;
 
   function f(x: real): real;
-  procedure trapArea(a, b, h: real);
+  procedure trapArea;
 
 Implementation
 //исполняемая часть>
@@ -17,10 +19,11 @@ Implementation
 
   function f(x: real): real;
   begin
-    f := 1 * x * x * x + 1 * x * r + (-4) * x + 13;
+    f := 1 * x * x * x + 1 * x * x + (-4) * x + 13;
   end;
 
-  procedure trapArea(a, b, h: real);
+  procedure trapArea;
+  begin
     x := a + h;
     area := (f(a) + f(b)) / 2;
     while (b - x) > t do
@@ -33,8 +36,7 @@ Implementation
     complite := True;
   end;
 Begin
-  currency := 0;
-  complite := True;
+  area := 0;
+  complite := False;
 //инициализация
 End.
-  
