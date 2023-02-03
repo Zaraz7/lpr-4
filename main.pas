@@ -21,10 +21,6 @@ const
     'Quit');
   t = 0.001;
   xRoot = -3.35;
-  x0 = 310;
-  y0 = 590;
-  xn = 600;
-  yn = 650;
 var
   i: integer;
   selectedItem, scaleX, scaleY: byte;
@@ -162,6 +158,7 @@ var
   procedure graphWindow; {Графика}
   var
     x, y: longint;
+    xn, yn, x0, y0: word;
     Driver, Mode: smallint;
     xReal, Si: currency;
     userValue, lblText: string;
@@ -170,12 +167,24 @@ var
   begin
     newPage(menu[selectedItem]);
 
-    scaleX := 20;
-    scaleY := 5;
+    scaleX := 15;
+    scaleY := 10;
 
     Driver:=10;
     Mode:=260;
     initGraph(Driver, Mode, '');
+
+    i := GraphResult; {Запоминаем результат}
+    if i <> grOk then {Проверяем ошибку}
+    begin
+      writeln(GraphErrorMsg(i));
+      readKey;
+    end;
+
+    xn := GetMaxX - 20;
+    yn := GetMaxY - 20;
+    x0 := xn div 2;
+    y0 := yn div 5 * 4;
 
     repeat
       ClearDevice;
@@ -192,7 +201,7 @@ var
       GetImage(20, 20, xn, yn, pFrame^); }
 
       xReal := (xn - 20) / 10;
-      for i := -5 to 4 do
+      for i := -4 to 4 do
       begin
         x := trunc(i * xReal);
         line(x0 + x, y0, x0 + x, y0 + 5);
@@ -211,7 +220,7 @@ var
       setColor(Cyan);
       y := yn - 1;
       moveTo(20, y);
-      for x := x0 - xn to xn - x0 do
+      for x := x0 - xn + 22 to xn - x0 do
       begin
         y := y0 - trunc(f(x / scaleX) * scaleY);
         if 20 > y then
@@ -285,31 +294,38 @@ var
         complite := True;
       end;
       //writeln;
-      userKey := ptccrt.readkey;
+      userKey := ptcCrt.readkey;
       case userKey of
-        #80:
+        #0: 
         begin
-          Dec(scaleY);
-          if scaleY = 0 then
-            scaleY := 1;
+          userKey := ptcCrt.readKey;
+          case userKey of
+            #80:
+            begin
+              Dec(scaleY);
+              if scaleY = 0 then
+                scaleY := 1;
+            end;
+            #72: Inc(scaleY);
+            #75:
+            begin
+              Dec(scaleX);
+              if scaleX = 0 then
+                scaleX := 1;
+            end;
+            #77: Inc(scaleX);
+          end;
         end;
-        #72: Inc(scaleY);
-        #75:
-        begin
-          Dec(scaleX);
-          if scaleX = 0 then
-            scaleX := 1;
-        end;
-        #77: Inc(scaleX);
-        // #116: PutImage(100, 100, pFrame^, NormalPut);
+        #116: PutImage(100, 100, pFrame^, NormalPut);
         #27:
         begin
           closeGraph;
-          userKey := #1;
+          restoreCrtMode;
+          break;
         end;
       end;
       // freeMem(pFrame, size);
-    until userKey = #1;
+    until False;
   end;
 
   procedure trapArea;
@@ -362,7 +378,8 @@ var
   procedure quit;
   begin
     clrScr;
-    halt;
+    closeGraph;
+    halt(0);
   end;
 
   procedure TUImenu; { В общем это и есть меню}
