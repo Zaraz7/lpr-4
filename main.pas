@@ -130,7 +130,7 @@ var
   begin
     newPage(menu[selectedItem]);
     if status then
-      ExecuteProcess('./tsGraphic', ['-li', strF(a), strF(b), strFi(n)])
+      ExecuteProcess('./tsGraphic', ['-lic', strF(a), strF(b), strFi(n)])
     else
       ExecuteProcess('./tsGraphic', ['-d']);
   end;

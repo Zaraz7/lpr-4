@@ -12,7 +12,7 @@ Interface
 
   function strF(s: real): string;
   function strFi(s: integer): string;
-  function f(x: real): real;
+  function f(x: real): currency;
   procedure trapArea;
 
 Implementation
@@ -28,7 +28,7 @@ Implementation
     str(s, strFi);
   end;
 
-  function f(x: real): real;
+  function f(x: real): currency;
   begin
     f := 1 * x * x * x + 1 * x * x + (-4) * x + 13;
   end;

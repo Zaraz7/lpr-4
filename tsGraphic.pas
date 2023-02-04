@@ -33,7 +33,7 @@ begin
 
   if paramCount <> 0 then
     case paramStr(1) of
-    '-li': begin
+    '-li', '-lic': begin
       if paramCount > 3 then begin
         errorCount := 0;
         val(paramStr(2), a, i);
@@ -53,6 +53,17 @@ begin
         end;
 
         if errorCount = 0 then begin
+          if paramStr(1) = '-li' then begin
+            if a < xRoot then
+              a := xRoot;
+            if b < xRoot then
+              b := xRoot;
+            if a > b then begin
+              a := a + b;
+              b := a - b;
+              a := a - b;
+            end;
+          end;
           h := (b - a) / n;
           status := True;
         end
@@ -95,6 +106,8 @@ begin
 {       Size := ImageSize(20, 20, xn, yn);
     GetMem(pFrame, Size);
     GetImage(20, 20, xn, yn, pFrame^); }
+
+    outTextXY(xn-50, yn-20, strFi(scaleX)+' '+strFi(scaleY));
 
     xReal := (xn - 20) / 10;
     for i := -4 to 4 do
@@ -202,7 +215,9 @@ begin
             if scaleY = 0 then
               scaleY := 1;
           end;
-          #72: Inc(scaleY);
+          #72: 
+          if scaleY div scaleX < 16 then
+            Inc(scaleY);
           #75:
           begin
             Dec(scaleX);
