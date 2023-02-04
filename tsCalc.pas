@@ -1,6 +1,5 @@
 Unit tsCalc;
 Interface
-//������������ �����>
   const
     Description = 'y = 1*x^3 + 1*x^2 + (-4)*x + 13';
     t = 0.001;
@@ -15,7 +14,6 @@ Interface
   procedure trapArea;
 
 Implementation
-//����������� �����>
   var 
     x: real;
 
@@ -41,5 +39,4 @@ Begin
   area := 0;
   complite := False;
   status := False;
-//�������������
 End.
