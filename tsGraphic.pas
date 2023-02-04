@@ -1,19 +1,17 @@
 program tsGraphic;
 
 {
-// ??????
-- [ ] ???????? ?????????? ?????????
-- [ ] ???????? ?????? ???????? ???????????
-- [ ] ???????? ??????? ????????? ???????????
-- [ ] ???????? ?????? ??????
-- [ ] ??????? ??????????? ????????
+// 
+- [x] Добавить параметры
+- [ ] Добавить окно с клавишами
+- [ ] Внедрить буферизацию изображения
 }
 
 uses
   ptcGraph, ptcCrt, tsCalc;
 
 var
-  scaleX, scaleY: byte;
+  scaleX, scaleY, errorCount: byte;
   xn, yn, x0, y0: word;
   Driver, Mode: smallint;
   i, size: integer;
@@ -37,6 +35,47 @@ var
   end;
 
 begin
+
+  if paramCount <> 0 then
+    case paramStr(1) of
+    '-li': begin
+      if paramCount > 3 then begin
+        errorCount := 0;
+        val(paramStr(2), a, i);
+        if i <> 0 then begin
+          writeLn('Error in the "a" parameter: ', paramStr(2));
+          inc(errorCount);
+        end;
+        val(paramStr(3), b, i);
+        if i <> 0 then begin
+          writeLn('Error in the "b" parameter: ', paramStr(3));
+          inc(errorCount);
+        end;
+        val(paramStr(4), n, i);
+        if (i <> 0) or (n = 0) then begin
+          writeLn('Error in the "n" parameter: ', paramStr(4));
+          inc(errorCount);
+        end;
+
+        if errorCount = 0 then begin
+          if a < xRoot then
+            a := xRoot;
+          if b < xRoot then
+            b := xRoot;
+          if a > b then begin
+            a := a + b;
+            b := a - b;
+            a := a - b;
+          end;
+          h := (b - a) / n;
+          status := True;
+        end
+      else
+        writeLn('Not enough parameters');
+    end;
+    end;
+    end;
+
     scaleX := 15;
     scaleY := 10;
 
@@ -44,11 +83,12 @@ begin
     Mode:=260;
     initGraph(Driver, Mode, '');
 
-    i := GraphResult; {?????????? ?????????}
-    if i <> grOk then {????????? ??????}
+    i := GraphResult;
+    if i <> grOk then 
     begin
       writeln(GraphErrorMsg(i));
       readKey;
+      exit;
     end;
 
     xn := GetMaxX - 20;

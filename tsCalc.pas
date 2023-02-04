@@ -1,9 +1,10 @@
 Unit tsCalc;
 Interface
-//интерфейсная часть>
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ>
   const
     Description = 'y = 1*x^3 + 1*x^2 + (-4)*x + 13';
     t = 0.001;
+    xRoot = -3.35;
   var
     status, complite: boolean;
     n: word;
@@ -14,7 +15,7 @@ Interface
   procedure trapArea;
 
 Implementation
-//исполняемая часть>
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ>
   var 
     x: real;
 
@@ -40,5 +41,5 @@ Begin
   area := 0;
   complite := False;
   status := False;
-//инициализация
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 End.

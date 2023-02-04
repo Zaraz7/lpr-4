@@ -13,7 +13,6 @@ const
     'Bias',
     'About',
     'Quit');
-  xRoot = -3.35;
 var
   i: integer;
   selectedItem: byte;
