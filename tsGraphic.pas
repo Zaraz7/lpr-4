@@ -21,11 +21,6 @@ var
   lblText, userValue: string;
   pFrame: Pointer;
 
-  function strF(s: real): string;
-  begin
-    str(s: 2: 2, strF);
-  end;
-
   function border(x, br: integer): integer;
   begin
     if x < br then
@@ -58,15 +53,6 @@ begin
         end;
 
         if errorCount = 0 then begin
-          if a < xRoot then
-            a := xRoot;
-          if b < xRoot then
-            b := xRoot;
-          if a > b then begin
-            a := a + b;
-            b := a - b;
-            a := a - b;
-          end;
           h := (b - a) / n;
           status := True;
         end

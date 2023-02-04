@@ -129,7 +129,10 @@ var
   procedure graphWindow; {Графика}
   begin
     newPage(menu[selectedItem]);
-    ExecuteProcess('./tsGraphic',['arg1','arg2']);
+    if status then
+      ExecuteProcess('./tsGraphic', ['-li', strF(a), strF(b), strFi(n)])
+    else
+      ExecuteProcess('./tsGraphic', ['-d']);
   end;
 
   procedure errorCalculate;

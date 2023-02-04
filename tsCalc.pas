@@ -10,12 +10,23 @@ Interface
     a, b, h: real;
     area: currency;
 
+  function strF(s: real): string;
+  function strFi(s: integer): string;
   function f(x: real): real;
   procedure trapArea;
 
 Implementation
   var 
     x: real;
+
+  function strF(s: real): string;
+  begin
+    str(s: 2: 2, strF);
+  end;
+  function strFi(s: integer): string;
+  begin
+    str(s, strFi);
+  end;
 
   function f(x: real): real;
   begin
