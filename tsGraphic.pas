@@ -4,7 +4,7 @@ program tsGraphic;
 // 
 - [x] Добавить параметры
 - [ ] Добавить окно с клавишами
-- [ ] Внедрить буферизацию изображения
+- [x] Внедрить буферизацию изображения
 }
 
 uses
@@ -14,8 +14,8 @@ var
   scaleX, scaleY, errorCount: byte;
   xn, yn, x0, y0: word;
   Driver, Mode: smallint;
-  i, size: integer;
-  x, y: longint;
+  i: integer;
+  x, y, fSize: longint;
   xReal, Si: currency;
   userKey: char;
   lblText, userValue: string;
@@ -93,24 +93,28 @@ begin
   x0 := xn div 2;
   y0 := yn div 5 * 4;
 
+  rectangle(20, 20, xn, yn);
+  outTextXY(x0 - 2, 4, 'Y');
+  outTextXY(xn + 4, y0 - 2, 'X');
+
+  line(20, y0, xn, y0);
+  line(x0, 20, x0, yn);
+
+  rectangle(25, 25, x0-5, 80);
+
+  fSize := ImageSize(20, 1, xn + 19, yn);
+  GetMem(pFrame, fSize);
+  GetImage(20, 1, xn + 19, yn, pFrame^);
   repeat
     ClearDevice;
+
+    PutImage(20,1,pFrame^,NormalPut);
     setColor(White);
-    rectangle(20, 20, xn, yn);
-    outTextXY(x0 - 2, 4, 'Y');
-    outTextXY(xn + 4, y0 - 2, 'X');
-
-    line(20, y0, xn, y0);
-    line(x0, 20, x0, yn);
-
-{       Size := ImageSize(20, 20, xn, yn);
-    GetMem(pFrame, Size);
-    GetImage(20, 20, xn, yn, pFrame^); }
 
     outTextXY(xn-50, yn-20, strFi(scaleX)+' '+strFi(scaleY));
 
-    xReal := (xn - 20) / 10;
-    for i := -4 to 4 do
+    xReal := (xn - 20) / 16;
+    for i := -7 to 7 do
     begin
       x := trunc(i * xReal);
       line(x0 + x, y0, x0 + x, y0 + 5);
@@ -227,15 +231,13 @@ begin
           #77: Inc(scaleX);
         end;
       end;
-      #116: PutImage(100, 100, pFrame^, NormalPut);
       #27:
       begin
-        closeGraph;
         restoreCrtMode;
         break;
       end;
     end;
-    // freeMem(pFrame, size);
   until False;
+  freeMem(pFrame, fSize);
   closeGraph;
 end.
