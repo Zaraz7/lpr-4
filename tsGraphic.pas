@@ -18,7 +18,7 @@ var
   x, y, fSize: longint;
   xReal, Si: currency;
   userKey: char;
-  lblText, userValue: string;
+  {lblText, }userValue: string;
   pFrame: Pointer;
 
   function border(x, br: integer): integer;
@@ -76,8 +76,8 @@ begin
   scaleX := 15;
   scaleY := 10;
 
-  Driver:=10;
-  Mode:=260;
+  Driver:=9;
+  Mode:=2;
   initGraph(Driver, Mode, '');
 
   i := GraphResult;
@@ -156,16 +156,16 @@ begin
     setColor(White);
     line(x0, 20, x0, yn);
 
-    xReal := (xn - 20) / 16;
-    for i := -7 to 7 do
+    xReal := (xn - 20) / 10;
+    for i := -3 to 3 do
     begin
       x := trunc(i * xReal);
       line(x0 + x, y0, x0 + x, y0 + 5);
       str(x / scaleX: 1: 1, userValue);
       outTextXY(x0 + x, y0 + 6, userValue);
     end;
-    xReal := (yn - 20) / 12;
-    for i := 1 to 10 do
+    xReal := (yn - 20) / 8;
+    for i := 1 to 6 do
     begin
       y := trunc(i * xReal);
       line(x0, y0 - y, x0 + 5, y0 - y);
