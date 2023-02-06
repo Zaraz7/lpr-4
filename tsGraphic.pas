@@ -197,6 +197,18 @@ begin
           #77: Inc(scaleX);
         end;
       end;
+	  #97, #228:
+	  begin
+		setFillStyle(1, White);
+		setColor(Black);
+		bar(25, 25, xn-5, 110);
+		outTextXY(30, 30, 'TrapsArea is a programm for calculation of an area of figure');
+		outTextXY(30, 45, 'limited by the Ox axis and curve');
+		outTextXY(30, 60, Description);
+		outTextXY(30, 75, 'using the Trapezoid method.');
+		outTextXY(30, 90, 'Made by Terlyck Maxim');
+		ptcCrt.readKey;
+	  end;
       'i', #248:
       if status then
       begin
