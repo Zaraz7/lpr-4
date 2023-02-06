@@ -36,7 +36,7 @@ var
     i: integer;
   begin
     clrScr;
-    textColor(Magenta);
+    textColor(LightMagenta);
     writeln('| ', lbl, ' |');
     Write('|');
     for i := 1 to length(lbl) + 2 do
@@ -183,15 +183,17 @@ var
         case userKey of
           #80:
           begin {вниз}
-            Inc(selectedItem);
-            if selectedItem > 6 then
-              selectedItem := 1;
+            if selectedItem < 6 then
+              Inc(selectedItem)
+			else
+			  selectedItem := 1;
           end;
           #72:
           begin {вверх}
-            Dec(selectedItem);
-            if selectedItem < 1 then
-              selectedItem := 6;
+            if selectedItem > 1 then
+			  Dec(selectedItem)
+			else
+			  selectedItem := 6;
           end;
           #13:
           begin
@@ -228,7 +230,7 @@ var
           #1, #27: quit;
         end;
         gotoXY(1, 10);
-        Write(ord(userKey));
+        //Write(ord(userKey));
       until userKey = #13;
       clrScr;
     until False;
