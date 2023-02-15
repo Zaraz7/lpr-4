@@ -110,7 +110,7 @@ begin
   outTextXY(xn-295, yn-65, '[' + #24 + '] or [' + #25 + ']: resize Oy up or down');
   outTextXY(xn-295, yn-50, '[' + #26 + '] or [' + #27 + ']: resize Ox up or down');
   outTextXY(xn-295, yn-35, '[i]: visualize integration process');
-  outTextXY(xn-295, yn-15, '[Esc]: escape/break visualization');
+  outTextXY(xn-295, yn-15, '[Esc]: escape [a]: about');
 
   fSize := ImageSize(20, 1, xn + 19, yn);
   GetMem(pFrame, fSize);
@@ -123,11 +123,11 @@ begin
 
     setColor(Cyan);
     y := yn - 1;
-    moveTo(20, y);
+    moveTo(21, y);
     for x := x0 - xn + 22 to xn - x0 do
     begin
       y :=  - trunc(f(x / scaleX) * scaleY) + y0;
-      if 20 > y then
+      if 21 > y then
         y := 21;
       if y > yn then
         y := yn - 1;
@@ -136,13 +136,14 @@ begin
 
     if status then
     begin
-      setColor(Cyan);
       x := x0 + trunc(scaleX * a);
-      if x <= xn then
+	  if x <= xn then
       begin
+		if x < 21 then
+		  x := 21;
         moveTo(x, 21);
         lineTo(x, y0 - 1);
-        y := border(x0 + trunc(scaleX * b), xn);
+        y := border(x0 + trunc(scaleX * b), xn-1);
         if x + 1 < y then
         begin
           lineTo(y, y0 - 1);

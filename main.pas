@@ -229,7 +229,7 @@ var
           end;
           #1, #27: quit;
         end;
-        gotoXY(1, 10);
+        //gotoXY(1, 10);
         //Write(ord(userKey));
       until userKey = #13;
       clrScr;
