@@ -5,7 +5,7 @@
 В папке проекта достаточно запустить одну строку в терминале.
 - Для PowerShell:
 ```powershell
-fpc -B main.pas; if ($?) {fpc tsGraphic.pas}fpc
+fpc -B main.pas; if ($?) {fpc tsGraphic.pas}
 ```
 - BASH:
 ```bash
